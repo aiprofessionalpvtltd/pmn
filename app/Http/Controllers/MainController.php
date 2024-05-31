@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Careers;
 use App\Models\NewsAndEvents;
 use App\Models\Publications;
 use Illuminate\Http\Request;
@@ -85,13 +86,7 @@ class MainController extends Controller
         // Handle file upload if a new file is provided
         if ($request->hasFile('attachment')) {
             // Delete the old file if it exists
-            if (Storage::exists('/' . $publication->file_path)) {
-                Storage::delete('/' . $publication->file_path);
-            }
-
-            $originalFileName = pathinfo($request->attachment->getClientOriginalName(), PATHINFO_FILENAME);
-            $sanitizedFileName = preg_replace('/[^A-Za-z0-9_\-]/', '_', $originalFileName);
-            $fileName = time() . '_' . $sanitizedFileName . '.' . $request->attachment->getClientOriginalExtension();
+            $fileName = $this->deleteTheOldFileIfItExists($publication, $request);
             $request->attachment->storeAs('public/publications', $fileName);
             $publication->file_path = 'publications/' . $fileName;
         }
@@ -185,19 +180,13 @@ class MainController extends Controller
         }
 
         if (isset($validatedData['description'])) {
-            $newsAndEvents->author = $validatedData['description'];
+            $newsAndEvents->description = $validatedData['description'];
         }
 
         // Handle file upload if a new file is provided
         if ($request->hasFile('attachment')) {
             // Delete the old file if it exists
-            if (Storage::exists('/' . $newsAndEvents->file_path)) {
-                Storage::delete('/' . $newsAndEvents->file_path);
-            }
-
-            $originalFileName = pathinfo($request->attachment->getClientOriginalName(), PATHINFO_FILENAME);
-            $sanitizedFileName = preg_replace('/[^A-Za-z0-9_\-]/', '_', $originalFileName);
-            $fileName = time() . '_' . $sanitizedFileName . '.' . $request->attachment->getClientOriginalExtension();
+            $fileName = $this->deleteTheOldFileIfItExists($newsAndEvents, $request);
             $request->attachment->storeAs('public/news-and-events', $fileName);
             $newsAndEvents->file_path = 'news-and-events/' . $fileName;
         }
@@ -223,5 +212,120 @@ class MainController extends Controller
         return redirect()->back()->with('success', 'news-and-events deleted successfully');
     }
 
+    public function getAdminCareers(Request $request)
+    {
+        $careers = Careers::query()->paginate(5); // Paginate with 5 records per page
+        return view('careers', ['careers' => $careers]);
+    }
+
+    public function createCareers(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'closingDate' => 'required|date_format:Y-m-d', // Ensure valid datetime format
+            'jobTitle' => 'required|string',
+            'description' => 'required|string',
+            'attachment' => 'required|file|mimes:pdf,doc,docx|max:4000', // File validation (max size 2048 KB)
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $validatedData = $validator->validated();
+        // Handle file upload
+        $originalFileName = pathinfo($request->attachment->getClientOriginalName(), PATHINFO_FILENAME);
+        $sanitizedFileName = preg_replace('/[^A-Za-z0-9_\-]/', '_', $originalFileName);
+        $fileName = time() . '_' . $sanitizedFileName . '.' . $request->attachment->getClientOriginalExtension();
+        $request->attachment->storeAs('public/careers', $fileName); // Store in 'publications' folder
+        $careers = Careers::create([
+            'job_title' => $validatedData['jobTitle'],
+            'closing_date' => $validatedData['closingDate'],
+            'description' => $validatedData['description'],
+            'file_path' => 'careers/' . $fileName, // Store the relative path
+        ]);
+        return redirect()->back();
+    }
+
+    public function updateCareers(Request $request, $id)
+    {
+        // Find the publication by ID
+        $careers = Careers::query()->findOrFail($id);
+
+        // Define validation rules
+        $rules = [
+            'jobTitle' => 'sometimes|date_format:Y-m-d', // Ensure valid datetime format
+            'closingDate' => 'sometimes|string',
+            'description' => 'sometimes|string',
+            'attachment' => 'sometimes|file|mimes:jpeg,png,jpg,gif,svg|max:4000', // File validation (max size 4000 KB)
+        ];
+
+        // Validate the request data
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        // Get the validated data
+        $validatedData = $validator->validated();
+
+        // Update fields only if they are provided
+        if (isset($validatedData['jobTitle'])) {
+            $careers->job_title = $validatedData['jobTitle'];
+        }
+
+        if (isset($validatedData['closingDate'])) {
+            $careers->closing_date = $validatedData['closingDate'];
+        }
+
+        if (isset($validatedData['description'])) {
+            $careers->description = $validatedData['description'];
+        }
+
+        // Handle file upload if a new file is provided
+        if ($request->hasFile('attachment')) {
+            // Delete the old file if it exists
+            $fileName = $this->deleteTheOldFileIfItExists($careers, $request);
+            $request->attachment->storeAs('public/careers', $fileName);
+            $careers->file_path = 'careers/' . $fileName;
+        }
+
+        // Save the updated careers
+        $careers->save();
+
+        return redirect()->back()->with('success', 'career entry updated successfully');
+    }
+
+    public function deleteCareers($id)
+    {
+        $careers = Careers::query()->findOrFail($id);
+
+        // Delete the file if it exists
+        if (Storage::exists('/' . $careers->file_path)) {
+            Storage::delete('/' . $careers->file_path);
+        }
+
+        // Delete the careers record
+        $careers->delete();
+
+        return redirect()->back()->with('success', 'career deleted successfully');
+    }
+
+    /**
+     * @param $newsAndEvents
+     * @param Request $request
+     * @return string
+     */
+    public function deleteTheOldFileIfItExists($modalObject, Request $request): string
+    {
+        if (Storage::exists('/' . $modalObject->file_path)) {
+            Storage::delete('/' . $modalObject->file_path);
+        }
+
+        $originalFileName = pathinfo($request->attachment->getClientOriginalName(), PATHINFO_FILENAME);
+        $sanitizedFileName = preg_replace('/[^A-Za-z0-9_\-]/', '_', $originalFileName);
+        return time() . '_' . $sanitizedFileName . '.' . $request->attachment->getClientOriginalExtension();
+    }
 
 }
