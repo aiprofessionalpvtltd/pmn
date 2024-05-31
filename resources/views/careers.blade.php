@@ -81,13 +81,13 @@
                     <div class="col-xl-10">
                         <div class="breadcrumb__content text-center">
                             <h3 class="breadcrumb__title">
-                                Our Publications
+                                Career
                                 <img src="{{asset('img/breadcrumb/titile.svg')}}" alt=""/>
                             </h3>
                             <div class="breadcrumb__list breadcrumb__list-translate">
                                 <span><a href="index.html">Home</a></span>
                                 <span class="dvdr"><i class="fa-regular fa-angle-right"></i></span>
-                                <span>Our Publications</span>
+                                <span> Career</span>
                             </div>
                         </div>
                     </div>
@@ -98,29 +98,29 @@
 
         <!-- Publication area start -->
         <div class="container publication-container">
-            <form class="mt-40" method="POST" action="{{ route('publications.create') }}" enctype="multipart/form-data">
+            <form class="mt-40" method="POST" action="{{ route('careers.create') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="col">
-                        <label for="">Date</label>
-                        <input type="datetime-local" class="form-control" placeholder="Date" name="Datetime" required/>
+                        <label for="">Job Title</label>
+                        <input type="text" class="form-control" placeholder="Job title..." name="jobTitle" required/>
                     </div>
                     <div class="col">
-                        <label for="">Title</label>
-                        <input type="text" class="form-control" placeholder="Title" name="title" required/>
+                        <label for="">Closing Date</label>
+                        <input type="date" class="form-control" placeholder="Closing Date..." name="closingDate" required/>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col mt-20">
-                        <label for="">Author</label>
-                        <input type="text" class="form-control" placeholder="Title" name="Author" required/>
+                        <label for="">Description</label>
+                        <input type="text" class="form-control" placeholder="Description..." name="description" required/>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-6 mt-20">
                         <label for="exampleFormControlFile1">Upload File</label><br/>
                         <input type="file" class="form-control" id="attachment" name="attachment"
-                               accept=".jpg, .jpeg, .png, .gif, .svg" required/>
+                               accept=".pdf,.doc,.docx" required/>
                     </div>
                 </div>
                 <input type="submit"/>
@@ -131,28 +131,28 @@
                 <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">Author</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">image</th>
+                    <th scope="col">Job Title</th>
+                    <th scope="col">Closing Date</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Attachment</th>
                     <th scope="col">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($publications as $item)
+                @foreach($careers as $item)
                     <tr>
                         <td>{{ $item['id'] }}</td>
-                        <td>{{ $item['title'] }}</td>
-                        <td>{{ $item['author'] }}</td>
-                        <td>{{ $item['date_time'] }}</td>
-                        <td><img src="{{ \Illuminate\Support\Facades\Storage::url('/').$item['file_path'] }}"
-                                 width="100" height="100"/></td>
+                        <td>{{ $item['job_title'] }}</td>
+                        <td>{{ $item['closing_date'] }}</td>
+                        <td>{{ $item['description'] }}</td>
+                        <td><a href="{{ \Illuminate\Support\Facades\Storage::url('/').$item['file_path'] }}"
+                            >Attachment</a></td>
                         <td>
                             <a href="#" onclick="openEditModal({{ $item }})">
                                 <i class="fas fa-edit"></i>
                             </a>
                             <!-- Delete button with a form -->
-                            <form action="{{ route('publications.delete', $item['id']) }}" method="POST"
+                            <form action="{{ route('careers.delete', $item['id']) }}" method="POST"
                                   style="display:inline;">
                                 @csrf
                                 @method('DELETE')
@@ -168,7 +168,7 @@
             </table>
             <!-- Pagination links -->
             <div class="d-flex justify-content-center">
-                {{ $publications->links('pagination::bootstrap-5') }}
+                {{ $careers->links('pagination::bootstrap-5') }}
             </div>
         </div>
         <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
@@ -188,17 +188,17 @@
                                 @csrf
                                 @method('PUT')
                                 <div class="form-group">
-                                    <label for="editDate">Date</label>
-                                    <input type="datetime-local" class="form-control" id="editDate" name="Datetime"
+                                    <label for="editDate">Job Title</label>
+                                    <input type="text" class="form-control" id="editTitle" name="jobTitle"
                                            required/>
                                 </div>
                                 <div class="form-group">
-                                    <label for="editTitle">Title</label>
-                                    <input type="text" class="form-control" id="editTitle" name="title" required/>
+                                    <label for="editTitle">Closing Date</label>
+                                    <input type="date" class="form-control" id="editDate" name="closingDate" required/>
                                 </div>
                                 <div class="form-group">
-                                    <label for="editAuthor">Author</label>
-                                    <input type="text" class="form-control" id="editAuthor" name="Author" required/>
+                                    <label for="editAuthor">Description</label>
+                                    <input type="text" class="form-control" id="editDescription" name="description" required/>
                                 </div>
                                 <div class="form-group">
                                     <div class="d-none">
@@ -208,7 +208,7 @@
                                     </div>
                                     <div class="mt-2">
                                         <!-- Display existing attachment -->
-                                        <img id="existingAttachment" src="" width="100" height="100"/>
+                                        <a id="existingAttachment" href="" >Attachment</a>
                                         <button type="button" class="btn btn-danger btn-sm mt-2" id="removeAttachment"
                                                 onclick="removeAttachmentSection()">
                                             Remove Attachment
@@ -266,16 +266,16 @@
     <script>
         function openEditModal(publicationData) {
             console.log(publicationData);
-            const {id, date_time, title, author, file_path} = publicationData;
+            const {id, closing_date, job_title, description, file_path} = publicationData;
             // Populate modal fields with data from the table row
-            $('#editDate').val(new Date(date_time).toISOString().slice(0, 16));
-            $('#editTitle').val(title);
-            $('#editAuthor').val(author);
-            $('#existingAttachment').attr('src', "{{\Illuminate\Support\Facades\Storage::url('/') }}" + file_path);
+            $('#editDate').val(closing_date);
+            $('#editTitle').val(job_title);
+            $('#editDescription').val(description);
+            $('#existingAttachment').attr('href', "{{\Illuminate\Support\Facades\Storage::url('/') }}" + file_path);
             $('#removeAttachment').parent().show();
             $('#editAttachment').parent().addClass('d-none').prop('required', false);
             // Set the form action URL to include the publication ID
-            $('#editPublicationForm').attr('action', `/admin/publications/${id}`);
+            $('#editPublicationForm').attr('action', `/admin/careers/${id}`);
 
             // Set the publication ID in a hidden input field
             $('#publicationId').val(id);
