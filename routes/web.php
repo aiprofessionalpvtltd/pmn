@@ -28,5 +28,11 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::put('/news-and-events/{id}', [MainController::class, 'updateNewsAndEvents'])->name('news.and.events.update');
     Route::delete('/news-and-events/{id}', [MainController::class, 'deleteNewsAndEvents'])->name('news.and.events.delete');
 
+    // careers routes
+    Route::get('/careers', [MainController::class, 'getAdminCareers'])->name('careers.index');
+    Route::post('/careers', [MainController::class, 'createCareers'])->name('careers.create');
+    Route::put('/careers/{id}', [MainController::class, 'updateCareers'])->name('careers.update');
+    Route::delete('/careers/{id}', [MainController::class, 'deleteCareers'])->name('careers.delete');
+
 });
 
