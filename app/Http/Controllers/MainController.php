@@ -254,8 +254,8 @@ class MainController extends Controller
 
         // Define validation rules
         $rules = [
-            'jobTitle' => 'sometimes|date_format:Y-m-d', // Ensure valid datetime format
-            'closingDate' => 'sometimes|string',
+            'closingDate' => 'sometimes|date_format:Y-m-d', // Ensure valid datetime format
+            'jobTitle' => 'sometimes|string',
             'description' => 'sometimes|string',
             'attachment' => 'sometimes|file|mimes:jpeg,png,jpg,gif,svg|max:4000', // File validation (max size 4000 KB)
         ];
