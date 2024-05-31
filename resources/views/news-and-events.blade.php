@@ -134,7 +134,7 @@
                     <th scope="col">Title</th>
                     <th scope="col">Description</th>
                     <th scope="col">Date</th>
-                    <th scope="col">image</th>
+                    <th scope="col">Attachments</th>
                     <th scope="col">Actions</th>
                 </tr>
                 </thead>
@@ -145,8 +145,7 @@
                         <td>{{ $item['title'] }}</td>
                         <td>{{ $item['description'] }}</td>
                         <td>{{ $item['date_time'] }}</td>
-                        <td><img src="{{ \Illuminate\Support\Facades\Storage::url('/').$item['file_path'] }}"
-                                 width="100" height="100"/></td>
+                        <td><a href="{{ \Illuminate\Support\Facades\Storage::url('/').$item['file_path'] }}">Attachment</a></td>
                         <td>
                             <a href="#" onclick="openEditModal({{ $item }})">
                                 <i class="fas fa-edit"></i>
@@ -208,7 +207,7 @@
                                     </div>
                                     <div class="mt-2">
                                         <!-- Display existing attachment -->
-                                        <img id="existingAttachment" src="" width="100" height="100"/>
+                                        <a id="existingAttachment" href="" >Attachment</a>
                                         <button type="button" class="btn btn-danger btn-sm mt-2" id="removeAttachment"
                                                 onclick="removeAttachmentSection()">
                                             Remove Attachment
@@ -271,7 +270,7 @@
             $('#editDate').val(new Date(date_time).toISOString().slice(0, 16));
             $('#editTitle').val(title);
             $('#editAuthor').val(description);
-            $('#existingAttachment').attr('src', "{{\Illuminate\Support\Facades\Storage::url('/') }}" + file_path);
+            $('#existingAttachment').attr('href', "{{\Illuminate\Support\Facades\Storage::url('/') }}" + file_path);
             $('#removeAttachment').parent().show();
             $('#editAttachment').parent().addClass('d-none').prop('required', false);
             // Set the form action URL to include the publication ID
