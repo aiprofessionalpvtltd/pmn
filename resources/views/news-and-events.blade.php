@@ -1,24 +1,6 @@
 <!DOCTYPE html>
 <html class="no-js" lang="zxx">
-<head>
-    <meta charset="utf-8"/>
-    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
-    <title>Publication - Pakistan Microfinance Network</title>
-    <meta name="description" content=""/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-
-    <!-- CSS here -->
-    <link rel="stylesheet" href="{{asset('css/bootstrap.css')}}"/>
-    <link rel="stylesheet" href="{{asset('css/animate.css')}}"/>
-    <link rel="stylesheet" href="{{asset('css/swiper-bundle.css')}}"/>
-    <link rel="stylesheet" href="{{asset('css/splide.css')}}"/>
-    <link rel="stylesheet" href="{{asset('css/nouislider.css')}}"/>
-    <link rel="stylesheet" href="{{asset('css/magnific-popup.css')}}"/>
-    <link rel="stylesheet" href="{{asset('css/font-awesome-pro.css')}}"/>
-    <link rel="stylesheet" href="{{asset('css/spacing.css')}}"/>
-    <link rel="stylesheet" href="{{asset('css/main.css')}}"/>
-    <link rel="stylesheet" href="{{asset('css/custom.css')}}"/>
-</head>
+@include('.Layouts.head')
 <body>
 @if ($errors->any())
     <div class="alert alert-danger">
@@ -29,41 +11,6 @@
         </ul>
     </div>
     @endif
-<!--[if lte IE 9]>
-    <p class="browserupgrade">
-        You are using an <strong>outdated</strong> browser. Please
-        <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.
-    </p>
-    <![endif]-->
-
-    <!-- pre loader area start -->
-    <div id="loading">
-        <div id="loading-center">
-            <div id="loading-center-absolute">
-                <div class="object" id="object_four"></div>
-                <div class="object" id="object_three"></div>
-                <div class="object" id="object_two"></div>
-                <div class="object" id="object_one"></div>
-            </div>
-        </div>
-    </div>
-    <!-- pre loader area end -->
-
-    <!-- back to top start -->
-    <div class="back-to-top-wrapper">
-        <button id="back_to_top" type="button" class="back-to-top-btn">
-            <svg width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                    d="M11 6L6 1L1 6"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                />
-            </svg>
-        </button>
-    </div>
-    <!-- back to top end -->
 
     <!-- header area start -->
     @include('.Layouts.header')
@@ -238,29 +185,7 @@
     <!-- modal area end -->
 
     <!-- JS here -->
-    <script src="{{asset('js/vendor/jquery.js')}}"></script>
-    <script src="{{asset('js/vendor/waypoints.js')}}"></script>
-    <script src="{{asset('js/bootstrap-bundle.js')}}"></script>
-    <script src="{{asset('js/meanmenu.js')}}"></script>
-    <script src="{{asset('js/swiper-bundle.js')}}"></script>
-    <script src="{{asset('js/splide.js')}}"></script>
-    <script src="{{asset('js/purecounter.js')}}"></script>
-    <script src="{{asset('js/nouislider.js')}}"></script>
-    <script src="{{asset('js/magnific-popup.js')}}"></script>
-    <script src="{{asset('js/nice-select.js')}}"></script>
-    <script src="{{asset('js/wow.js')}}"></script>
-    <script src="{{asset('js/gsap.min.js')}}"></script>
-    <script src="{{asset('js/split-text.min.js')}}"></script>
-    <script src="{{asset('js/scrool-triger.js')}}"></script>
-    <script src="{{asset('js/scrollMagic.min.js')}}"></script>
-    <script src="{{asset('js/parallax-scroll.js')}}"></script>
-    <script src="{{asset('js/animation.gsap.min.js')}}"></script>
-    <script src="{{asset('js/isotope-pkgd.js')}}"></script>
-    <script src="{{asset('js/imagesloaded-pkgd.js')}}"></script>
-    <script src="{{asset('js/jquery-appear.js')}}"></script>
-    <script src="{{asset('js/jquery-knob.js')}}"></script>
-    <script src="{{asset('js/ajax-form.js')}}"></script>
-    <script src="{{asset('js/main.js')}}"></script>
+    @include('.Layouts.js-scripts')
 
     <script>
         function openEditModal(newsAndEventsData) {

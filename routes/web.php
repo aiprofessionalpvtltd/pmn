@@ -5,7 +5,6 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MainController;
 use Illuminate\Support\Facades\Auth;
 
-Route::view('/', 'home');
 Route::get('/login', function () {
     if (Auth::check()) {
         redirect('home');
@@ -36,3 +35,9 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
 
 });
 
+Route::get('/publications', [MainController::class, 'getPublicPublications'])->name('publications');
+
+Route::view('/', 'home')->name('home');
+Route::view('/team', 'team')->name('team');
+Route::view('/about-us', 'about-us')->name('about-us');
+Route::view('/contact-us', 'contact-us')->name('contact-us');

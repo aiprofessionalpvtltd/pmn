@@ -15,7 +15,12 @@ class MainController extends Controller
     public function getAdminPublications(Request $request)
     {
         $publications = Publications::paginate(5); // Paginate with 10 records per page
-        return view('publications', ['publications' => $publications]);
+        return view('publications.index', ['publications' => $publications]);
+    }
+
+    public function getPublicPublications(Request $request) {
+        $publications = Publications::all();
+        return view('publication', ['publications' => $publications]);
     }
 
     public function createNewPublication(Request $request)
@@ -25,7 +30,7 @@ class MainController extends Controller
             'Datetime' => 'required|date_format:Y-m-d\TH:i', // Ensure valid datetime format
             'title' => 'required|string',
             'Author' => 'required|string',
-            'attachment' => 'required|file|mimes:jpeg,png,jpg,gif,svg|max:4000', // File validation (max size 2048 KB)
+            'attachment' => 'required|file|mimes:jpeg,png,jpg,gif,svg|max:4000', // File validation (max size 4000 KB)
         ]);
 
         if ($validator->fails()) {

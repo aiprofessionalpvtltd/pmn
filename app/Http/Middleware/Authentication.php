@@ -17,7 +17,7 @@ class Authentication
     public function handle(Request $request, Closure $next): Response
     {
         if (!Auth::check()) {
-            return redirect()->route('login'); // Assumes you have a named route 'login'
+            return redirect()->route('login');
         }
 
         return $next($request);

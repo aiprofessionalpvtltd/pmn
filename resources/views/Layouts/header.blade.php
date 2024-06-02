@@ -1,3 +1,39 @@
+<!--[if lte IE 9]>
+<p class="browserupgrade">
+    You are using an <strong>outdated</strong> browser. Please
+    <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.
+</p>
+<![endif]-->
+
+<!-- pre loader area start -->
+<div id="loading">
+    <div id="loading-center">
+        <div id="loading-center-absolute">
+            <div class="object" id="object_four"></div>
+            <div class="object" id="object_three"></div>
+            <div class="object" id="object_two"></div>
+            <div class="object" id="object_one"></div>
+        </div>
+    </div>
+</div>
+<!-- pre loader area end -->
+
+<!-- back to top start -->
+<div class="back-to-top-wrapper">
+    <button id="back_to_top" type="button" class="back-to-top-btn">
+        <svg width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+                d="M11 6L6 1L1 6"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+        </svg>
+    </button>
+</div>
+<!-- back to top end -->
+
 <header class="tp-header-3-area tp-header-3-transparent tp-header-height p-relative">
     <div id="header-sticky" class="tp-header-3-bottom header__sticky p-relative">
         <div class="tp-header-3-bottom-inner p-relative">
@@ -7,7 +43,7 @@
                         <div
                             class="tp-header-2-main-left d-flex align-items-center justify-content-xl-center p-relative">
                             <div class="tp-header-3-logo">
-                                <a href="index.html">
+                                <a href="{{route('home')}}">
                                     <img src="{{asset('img/logo/footer-logo.png')}}" alt=""/>
                                 </a>
                             </div>
@@ -18,11 +54,22 @@
                             <div class="tp-main-menu menu-icon">
                                 <nav id="tp-mobile-menu">
                                     <ul>
+                                        @if(!isset($publicNav))
                                         <li><a href="{{ route('news.and.events.index') }}">News and Events</a></li>
                                         <li><a href="{{ route('publications.index') }}">Publications</a></li>
                                         <li><a href="{{ route('careers.index') }}">Career</a></li>
+                                        @else
+                                            <li><a href="{{route('about-us')}}">About Us</a></li>
+                                            <li><a href="{{route('team')}}">Members</a></li>
+                                            <li><a href="#">Resources</a></li>
+                                            <li><a href={{route('publications')}}>Publications</a></li>
+                                            <li><a href="#">Careers</a></li>
+                                            <li><a href="{{route('contact-us')}}">Contact</a></li>
+                                            <li><a href="#">Trainings</a></li>
+                                        @endif
                                     </ul>
                                 </nav>
+
                             </div>
                             <div class="tp-header-search search-open-btn d-none d-xl-block">
                                 <a href="javascript:void(0);">
