@@ -62,8 +62,8 @@
                                             <li><a href="{{route('about-us')}}">About Us</a></li>
                                             <li><a href="{{route('team')}}">Members</a></li>
                                             <li><a href="#">Resources</a></li>
-                                            <li><a href={{route('publications')}}>Publications</a></li>
-                                            <li><a href="#">Careers</a></li>
+                                            <li><a href="{{route('publications')}}">Publications</a></li>
+                                            <li><a href="{{route('public-career-page')}}">Careers</a></li>
                                             <li><a href="{{route('contact-us')}}">Contact</a></li>
                                             <li><a href="#">Trainings</a></li>
                                         @endif
