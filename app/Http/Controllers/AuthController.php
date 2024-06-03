@@ -18,7 +18,7 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('/'); // Redirect to intended URL or homepage
+            return redirect()->intended('/admin/publications'); // Redirect to intended URL or homepage
         }
 
         // Flash error message on failed login

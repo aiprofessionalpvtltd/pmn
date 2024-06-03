@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 Route::get('/login', function () {
     if (Auth::check()) {
-        redirect('home');
+        return redirect()->route('publications.index');
     }
     return view('login');
 });
@@ -36,6 +36,7 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
 });
 
 Route::get('/publications', [MainController::class, 'getPublicPublications'])->name('publications');
+Route::get('/careers', [MainController::class, 'getPublicCareers'])->name('public-career-page');
 
 Route::view('/', 'home')->name('home');
 Route::view('/team', 'team')->name('team');

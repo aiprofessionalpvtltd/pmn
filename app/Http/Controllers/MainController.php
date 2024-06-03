@@ -15,7 +15,7 @@ class MainController extends Controller
     public function getAdminPublications(Request $request)
     {
         $publications = Publications::paginate(5); // Paginate with 10 records per page
-        return view('publications.index', ['publications' => $publications]);
+        return view('Admin.publications', ['publications' => $publications]);
     }
 
     public function getPublicPublications(Request $request) {
@@ -120,7 +120,7 @@ class MainController extends Controller
     public function getAdminNewsAndEvents(Request $request)
     {
         $newsAndEvents = NewsAndEvents::paginate(5); // Paginate with 5 records per page
-        return view('news-and-events', ['newsAndEvents' => $newsAndEvents]);
+        return view('Admin.news-and-events', ['newsAndEvents' => $newsAndEvents]);
     }
 
     public function createNewsAndEvents(Request $request)
@@ -220,6 +220,12 @@ class MainController extends Controller
     public function getAdminCareers(Request $request)
     {
         $careers = Careers::query()->paginate(5); // Paginate with 5 records per page
+        return view('Admin.careers', ['careers' => $careers]);
+    }
+
+    public function getPublicCareers(Request $request)
+    {
+        $careers = Careers::all(); // Paginate with 5 records per page
         return view('careers', ['careers' => $careers]);
     }
 
