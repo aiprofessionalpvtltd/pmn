@@ -59,17 +59,17 @@
             <div class="row">
                 <div class="col mt-20">
                     <label for="">Description</label>
-                    <input type="text" class="form-control" placeholder="Description..." name="description" required/>
+                    <textarea class="form-control" placeholder="Description..." name="description" required ></textarea>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-6 mt-20">
-                    <label for="exampleFormControlFile1">Upload File</label><br/>
-                    <input type="file" class="form-control" id="attachment" name="attachment"
-                           accept=".pdf,.doc,.docx" required/>
-                </div>
-            </div>
-            <input type="submit"/>
+{{--            <div class="row">--}}
+{{--                <div class="col-6 mt-20">--}}
+{{--                    <label for="exampleFormControlFile1">Upload File</label><br/>--}}
+{{--                    <input type="file" class="form-control" id="attachment" name="attachment"--}}
+{{--                           accept=".pdf,.doc,.docx" required/>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+            <input type="submit">
         </form>
     </div>
     <div style="width: 50%; margin: 0 auto;">
@@ -90,7 +90,7 @@
                     <td>{{ $item['id'] }}</td>
                     <td>{{ $item['job_title'] }}</td>
                     <td>{{ $item['closing_date'] }}</td>
-                    <td>{{ $item['description'] }}</td>
+                    <td>{!! nl2br(e($item['description'])) !!}</td>
                     <td><a href="{{ \Illuminate\Support\Facades\Storage::url('/').$item['file_path'] }}"
                         >Attachment</a></td>
                     <td>
@@ -144,24 +144,24 @@
                             </div>
                             <div class="form-group">
                                 <label for="editAuthor">Description</label>
-                                <input type="text" class="form-control" id="editDescription" name="description"
-                                       required/>
+                                <textarea class="form-control" id="editDescription" name="description"
+                                ></textarea>
                             </div>
-                            <div class="form-group">
-                                <div class="d-none">
-                                    <label for="editAttachment">Upload File</label>
-                                    <input type="file" class="form-control" id="editAttachment" name="attachment"
-                                           accept=".jpg, .jpeg, .png, .gif, .svg"/>
-                                </div>
-                                <div class="mt-2">
-                                    <!-- Display existing attachment -->
-                                    <a id="existingAttachment" href="">Attachment</a>
-                                    <button type="button" class="btn btn-danger btn-sm mt-2" id="removeAttachment"
-                                            onclick="removeAttachmentSection()">
-                                        Remove Attachment
-                                    </button>
-                                </div>
-                            </div>
+{{--                            <div class="form-group">--}}
+{{--                                <div class="d-none">--}}
+{{--                                    <label for="editAttachment">Upload File</label>--}}
+{{--                                    <input type="file" class="form-control" id="editAttachment" name="attachment"--}}
+{{--                                           accept=".jpg, .jpeg, .png, .gif, .svg"/>--}}
+{{--                                </div>--}}
+{{--                                <div class="mt-2">--}}
+{{--                                    <!-- Display existing attachment -->--}}
+{{--                                    <a id="existingAttachment" href="">Attachment</a>--}}
+{{--                                    <button type="button" class="btn btn-danger btn-sm mt-2" id="removeAttachment"--}}
+{{--                                            onclick="removeAttachmentSection()">--}}
+{{--                                        Remove Attachment--}}
+{{--                                    </button>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                         </div>
                         <input type="hidden" id="publicationId" name="id">
                         <div class="modal-footer">
@@ -191,9 +191,9 @@
         $('#editDate').val(closing_date);
         $('#editTitle').val(job_title);
         $('#editDescription').val(description);
-        $('#existingAttachment').attr('href', "{{\Illuminate\Support\Facades\Storage::url('/') }}" + file_path);
-        $('#removeAttachment').parent().show();
-        $('#editAttachment').parent().addClass('d-none').prop('required', false);
+        {{--$('#existingAttachment').attr('href', "{{\Illuminate\Support\Facades\Storage::url('/') }}" + file_path);--}}
+        {{--$('#removeAttachment').parent().show();--}}
+        {{--$('#editAttachment').parent().addClass('d-none').prop('required', false);--}}
         // Set the form action URL to include the publication ID
         $('#editPublicationForm').attr('action', `/admin/careers/${id}`);
 

@@ -236,7 +236,7 @@ class MainController extends Controller
             'closingDate' => 'required|date_format:Y-m-d', // Ensure valid datetime format
             'jobTitle' => 'required|string',
             'description' => 'required|string',
-            'attachment' => 'required|file|mimes:pdf,doc,docx|max:4000', // File validation (max size 2048 KB)
+            'attachment' => 'sometimes|file|mimes:pdf,doc,docx|max:4000', // File validation (max size 2048 KB)
         ]);
 
         if ($validator->fails()) {
@@ -244,16 +244,18 @@ class MainController extends Controller
         }
 
         $validatedData = $validator->validated();
-        // Handle file upload
-        $originalFileName = pathinfo($request->attachment->getClientOriginalName(), PATHINFO_FILENAME);
-        $sanitizedFileName = preg_replace('/[^A-Za-z0-9_\-]/', '_', $originalFileName);
-        $fileName = time() . '_' . $sanitizedFileName . '.' . $request->attachment->getClientOriginalExtension();
-        $request->attachment->storeAs('public/careers', $fileName); // Store in 'publications' folder
+        if ($request->hasFile('attachment')) {
+            // Handle file upload
+            $originalFileName = pathinfo($request->attachment->getClientOriginalName(), PATHINFO_FILENAME);
+            $sanitizedFileName = preg_replace('/[^A-Za-z0-9_\-]/', '_', $originalFileName);
+            $fileName = time() . '_' . $sanitizedFileName . '.' . $request->attachment->getClientOriginalExtension();
+            $request->attachment->storeAs('public/careers', $fileName); // Store in 'careers' folder
+        }
         $careers = Careers::create([
             'job_title' => $validatedData['jobTitle'],
             'closing_date' => $validatedData['closingDate'],
             'description' => $validatedData['description'],
-            'file_path' => 'careers/' . $fileName, // Store the relative path
+            'file_path' => $request->hasFile('attachment') ? 'careers/' . $fileName : null, // Store the relative path
         ]);
         return redirect()->back();
     }

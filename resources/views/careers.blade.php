@@ -40,7 +40,7 @@
                 <h4 class="tp-portfolio-details-list-title">{{$item['job_title']}}</h4>
                 <ul>
                     <li>
-                        {{ $item['description'] }}
+                        {!! nl2br(e($item['description'])) !!}
                     </li>
                     <li>
                         Closing Date: {{ (new DateTime($item->closing_date))->format('M d, Y')}}
