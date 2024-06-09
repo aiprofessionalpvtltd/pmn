@@ -710,7 +710,7 @@
                         </div>
                         <div class="tp-blog-3-btn d-flex justify-content-between">
                             <div class="read-more p-relative">
-                                <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                <a href="{{route('news-and-events-public')}}"
                                 >Read More
                                     <span
                                     ><svg width="21" height="19" viewBox="0 0 21 19" fill="none" xmlns="http://www.w3.org/2000/svg">
