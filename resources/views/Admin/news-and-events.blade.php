@@ -68,13 +68,15 @@
                     <label for="exampleFormControlFile1">Upload File</label><br/>
                     <input type="file" class="form-control" id="attachment" name="attachment"
                            accept=".jpg, .jpeg, .png, .gif, .svg" required/>
+                            <button class="btn btn-primary mt-3 float-end" type="submit">Submit</button>
                 </div>
+               
             </div>
-            <input type="submit"/>
+            
         </form>
     </div>
-    <div style="width: 50%; margin: 0 auto;">
-        <table class="table table-dark">
+    <div class="container">
+        <table class="table table-responsive">
             <thead>
             <tr>
                 <th scope="col">#</th>
