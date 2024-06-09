@@ -42,3 +42,4 @@ Route::view('/', 'home')->name('home');
 Route::view('/team', 'team')->name('team');
 Route::view('/about-us', 'about-us')->name('about-us');
 Route::view('/contact-us', 'contact-us')->name('contact-us');
+Route::view('/news-and-events', 'news-and-events')->name('news.and.events.public');
