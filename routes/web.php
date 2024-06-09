@@ -35,11 +35,11 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
 
 });
 
+Route::get('/', [MainController::class, 'getHomePage'])->name('home');
 Route::get('/publications', [MainController::class, 'getPublicPublications'])->name('publications');
+Route::get('/news-and-events', [MainController::class, 'getNewsAndEventsPublic'])->name('news-and-events-public');
 Route::get('/careers', [MainController::class, 'getPublicCareers'])->name('public-career-page');
 
-Route::view('/', 'home')->name('home');
 Route::view('/team', 'team')->name('team');
 Route::view('/about-us', 'about-us')->name('about-us');
 Route::view('/contact-us', 'contact-us')->name('contact-us');
-Route::view('/news-and-events', 'news-and-events')->name('news.and.events.public');

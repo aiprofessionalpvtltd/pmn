@@ -60,7 +60,7 @@
             <div class="row">
                 <div class="col mt-20">
                     <label for="">Description</label>
-                    <input type="text" class="form-control" placeholder="description" name="description" required/>
+                    <textarea class="form-control" placeholder="Description..." name="description" required ></textarea>
                 </div>
             </div>
             <div class="row">
@@ -70,9 +70,9 @@
                            accept=".jpg, .jpeg, .png, .gif, .svg" required/>
                             <button class="btn btn-primary mt-3 float-end" type="submit">Submit</button>
                 </div>
-               
+
             </div>
-            
+
         </form>
     </div>
     <div class="container">
@@ -148,7 +148,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="editAuthor">Description</label>
-                                <input type="text" class="form-control" id="editAuthor" name="description" required/>
+                                <textarea class="form-control" id="editDescription" name="description"
+                                ></textarea>
                             </div>
                             <div class="form-group">
                                 <div class="d-none">
@@ -193,7 +194,7 @@
         // Populate modal fields with data from the table row
         $('#editDate').val(new Date(date_time).toISOString().slice(0, 16));
         $('#editTitle').val(title);
-        $('#editAuthor').val(description);
+        $('#editDescription').val(description);
         $('#existingAttachment').attr('href', "{{\Illuminate\Support\Facades\Storage::url('/') }}" + file_path);
         $('#removeAttachment').parent().show();
         $('#editAttachment').parent().addClass('d-none').prop('required', false);

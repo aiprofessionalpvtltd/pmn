@@ -341,4 +341,14 @@ class MainController extends Controller
         return time() . '_' . $sanitizedFileName . '.' . $request->attachment->getClientOriginalExtension();
     }
 
+    public function getHomePage(Request $request) {
+        $newsAndEvents = NewsAndEvents::query()->orderByDesc('created_at')->limit(4)->get();
+        return view('home', ['newsAndEvents' => $newsAndEvents]);
+    }
+
+    public function getNewsAndEventsPublic(Request $request) {
+        $newsAndEvents = NewsAndEvents::query()->orderByDesc('created_at')->get();
+        return view('news-and-events', ['newsAndEvents' => $newsAndEvents]);
+    }
+
 }
