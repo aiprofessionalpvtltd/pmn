@@ -70,7 +70,7 @@
                     <button class="btn btn-primary mt-3 float-end" type="submit">Submit</button>
                 </div>
             </div>
-            
+
         </form>
     </div>
     <div class="container">
@@ -81,7 +81,7 @@
                 <th scope="col">Title</th>
                 <th scope="col">Author</th>
                 <th scope="col">Date</th>
-                <th scope="col">Attachments</th> 
+                <th scope="col">Attachments</th>
                 <th scope="col">Actions</th>
             </tr>
             </thead>
@@ -94,7 +94,6 @@
                     <td>{{ $item['date_time'] }}</td>
                     <td><a href="{{ \Illuminate\Support\Facades\Storage::url('/').$item['file_path'] }}"
                         >Attachment</a></td>
-                    <td>
                     <td>
                         <a href="#" onclick="openEditModal({{ $item }})">
                             <i class="fas fa-edit"></i>

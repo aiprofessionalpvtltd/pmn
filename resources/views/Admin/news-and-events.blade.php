@@ -94,9 +94,7 @@
                     <td>{{ $item['title'] }}</td>
                     <td>{{ $item['description'] }}</td>
                     <td>{{ $item['date_time'] }}</td>
-                    <td><a href="{{ \Illuminate\Support\Facades\Storage::url('/').$item['file_path'] }}"
-                        >Attachment</a></td>
-                    <td>
+                    <td><a href="{{ \Illuminate\Support\Facades\Storage::url('/').$item['file_path'] }}">Attachment</a></td>
                     <td>
                         <a href="#" onclick="openEditModal({{ $item }})">
                             <i class="fas fa-edit"></i>
